@@ -25,4 +25,4 @@ Train: 2019-2022. Test: 2023. The dataset has no 2024 news.
 
 ## 6. Filtered data
 data/processed/news_5_stocks.csv: 52,318 articles, 15 duplicate article+stock pairs
-(to be removed in Phase 2).
+(to be removed in Phase 2).- Weekend and holiday news rolls forward to the next trading day on or after its date. Example: Saturday news counts toward Monday's row.
