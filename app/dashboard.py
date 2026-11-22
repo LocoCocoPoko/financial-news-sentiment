@@ -30,20 +30,28 @@ long = results.melt(
     value_name="AUC",
 )
 
-# Dots instead of bars, with the y-axis zoomed in so small gaps are visible
+# Same y-scale for both layers, so they line up
+y_scale = alt.Scale(domain=[0.47, 0.55])
+
+# Dots for each model's AUC
 dots = (
     alt.Chart(long)
     .mark_point(size=150, filled=True)
     .encode(
         x=alt.X("Test year:O"),
         xOffset="Model:N",
-        y=alt.Y("AUC:Q", scale=alt.Scale(domain=[0.47, 0.55])),
+        y=alt.Y("AUC:Q", title="AUC", scale=y_scale),
         color="Model:N",
     )
 )
 
-# Dashed line at 0.5: a model on this line is no better than guessing
-guess_line = alt.Chart(pd.DataFrame({"y": [0.5]})).mark_rule(strokeDash=[4, 4]).encode(y="y:Q")
+# Dashed line at 0.5: a model on this line is no better than guessing.
+# Same title ("AUC") as the dots, so Altair shows one label instead of two.
+guess_line = (
+    alt.Chart(pd.DataFrame({"y": [0.5]}))
+    .mark_rule(strokeDash=[4, 4])
+    .encode(y=alt.Y("y:Q", title="AUC", scale=y_scale))
+)
 
 st.altair_chart(dots + guess_line, use_container_width=True)
 
