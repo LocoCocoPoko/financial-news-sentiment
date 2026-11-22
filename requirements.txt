@@ -1,3 +1,6 @@
 pandas
 yfinance
 scikit-learn
+transformers
+torch
+streamlit
