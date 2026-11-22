@@ -49,3 +49,22 @@ day. The earlier news-volume result (0.528) was inflated by this and is discarde
   would be just one year.
 - Several model variants were tried. Choosing the best one would overstate results,
   so this write-up reports all of them.
+
+## Full-article sentiment
+
+We repeated the walk-forward test using FinBERT scores from the full article
+text instead of the headline. Articles were scored on Google Colab (GPU).
+The dataset contained 37,934 articles with body text after removing empty and
+duplicate rows, compared with 52,303 headlines. Because of this, the two sets of
+results cover slightly different news.
+
+| Test year | Market accuracy | Market AUC | Sentiment accuracy | Sentiment AUC |
+|-----------|-----------------|------------|--------------------|---------------|
+| 2021      | 0.517           | 0.522      | 0.522              | 0.520         |
+| 2022      | 0.511           | 0.492      | 0.507              | 0.489         |
+| 2023      | 0.531           | 0.508      | 0.516              | 0.513         |
+
+Using full text did not change the conclusion. Sentiment is below market-only
+in 2021 and 2022, and only slightly above it on AUC in 2023 (0.513 vs 0.508).
+FinBERT reads only the first 512 word pieces of each article, so it sees roughly
+the opening few paragraphs.
