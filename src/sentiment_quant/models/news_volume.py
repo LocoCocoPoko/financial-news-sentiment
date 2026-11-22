@@ -6,6 +6,8 @@ from sklearn.preprocessing import StandardScaler
 
 df = pd.read_csv("data/processed/daily_dataset.csv", parse_dates=["date"])
 df = df.sort_values(["Symbol", "date"])
+# Use yesterday's news, not today's, because today's articles may come out after the close
+df["n_articles"] = df.groupby("Symbol")["n_articles"].shift(1)
 
 # Daily return: today's close vs yesterday's close, per stock
 df["ret"] = df.groupby("Symbol")["Adj Close"].pct_change()
